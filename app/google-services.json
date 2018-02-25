@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "471293088548",
+    "firebase_url": "https://big-brother-20-26b38.firebaseio.com",
+    "project_id": "big-brother-20-26b38",
+    "storage_bucket": "big-brother-20-26b38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471293088548:android:bdd4e81279e2aa31",
+        "android_client_info": {
+          "package_name": "installedheights.bigbrother20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471293088548-s8tbl83og57b95h8rvma2gq9mhgpgv2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "installedheights.bigbrother20",
+            "certificate_hash": "900955238c23e0fdfe01f7580c4bac00718de3e6"
+          }
+        },
+        {
+          "client_id": "471293088548-p5vjpb3gptctaefdo067qfofv856a4no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1eDnyd9BAk3GT98rbUrLHUBetOFj6Ue8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471293088548-p5vjpb3gptctaefdo067qfofv856a4no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
