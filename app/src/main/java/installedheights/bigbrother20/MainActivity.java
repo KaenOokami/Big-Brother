@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             // Logic to handle location object
                             currentlocation = location;
                         }
+                        else {
+                            currentlocation = new Location("fake");
+                            currentlocation.setLatitude(33.7817);
+                            currentlocation.setLongitude(-84.3876);
+                        }
                     }
                 });
     }
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
+        LatLng sydney = new LatLng(33.7817, -84.3876);
         googleMap.addMarker(new MarkerOptions().position(sydney)
                 .title("Marker in Sydney"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
