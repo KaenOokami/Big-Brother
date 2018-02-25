@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ElLocoWatchApplication</string>
-    <string-array name="planets_array">
-        <item>Contact Police</item>
-        <!--
-        <item>Area Rating</item>
-        <item>Anonymous Chat</item>
-        <item>Crime Related Photo Upload</item>
-        -->
-        <item>FAQ</item>
-    </string-array>
 </resources>
