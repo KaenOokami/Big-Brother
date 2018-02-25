@@ -1,5 +1,6 @@
 package installedheights.bigbrother20;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,45 +12,74 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.LocationCallback;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("geofire");
+    final GeoFire geoFire = new GeoFire(ref);
+    private Location currentlocation;
+
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    private void currentdevicelocation(){
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            currentlocation = location;
+                        }
+                    }
+                });
+    }
+
+    private void setupbutton(){
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( currentlocation != null){
+                    GeoLocation gel = new GeoLocation(currentlocation.getLatitude(), currentlocation.getLongitude());
+                    geoFire.setLocation(ref.push().getKey(), gel, new GeoFire.CompletionListener() {
+
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+                            Log.v("BigBro", "Update Map");
+
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("geofire");
-        final GeoFire geoFire = new GeoFire(ref);
-        Button button2 = (Button) findViewById(R.id.button2);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GeoLocation gel = new GeoLocation(37.7853889, -122.4056973);
-                geoFire.setLocation(ref.push().getKey(), gel, new GeoFire.CompletionListener() {
+        currentdevicelocation();
 
-                    @Override
-                    public void onComplete(String key, DatabaseError error) {
-                        Log.v("BigBro", "Update Map");
-
-                    }
-                });
-            }
-        });
-
+        setupbutton();
 
         GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(37.7832, -122.4056), 0.6);
 
@@ -80,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
