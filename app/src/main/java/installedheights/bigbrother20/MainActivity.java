@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                         else {
                             currentlocation = new Location("fake");
-                            currentlocation.setLatitude(33.7817);
-                            currentlocation.setLongitude(-84.3876);
+                            currentlocation.setLatitude(29.9966);
+                            currentlocation.setLongitude(-90.0648);
                         }
                     }
                 });
