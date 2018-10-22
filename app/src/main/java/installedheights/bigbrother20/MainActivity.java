@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private GoogleMap map;
+
     final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("geofire");
     final GeoFire geoFire = new GeoFire(ref);
     private Location currentlocation;
@@ -59,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 if ( currentlocation != null){
                     GeoLocation gel = new GeoLocation(currentlocation.getLatitude(), currentlocation.getLongitude());
-                    geoFire.setLocation(ref.push().getKey(), gel, new GeoFire.CompletionListener() {
-
+                    geoFire.setLocation(ref.push().getKey(), gel, new GeoFire.CompletionListener()
+                            {
                         @Override
                         public void onComplete(String key, DatabaseError error) {
                             Log.v("BigBro", "Update Map");
@@ -68,7 +70,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     });
                 }
-
+                LatLng loc = new LatLng(currentlocation.getLatitude(), currentlocation.getLongitude());
+                map.addMarker(new MarkerOptions().position(loc)
+                        .title("Marker in Sydney"));
             }
         });
     }
@@ -118,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
+        //Assigns GoogleMap to map
+
+        map = googleMap;
+
         LatLng sydney = new LatLng(33.7817, -84.3876);
         googleMap.addMarker(new MarkerOptions().position(sydney)
                 .title("Marker in Sydney"));
